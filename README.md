@@ -3,11 +3,12 @@
 **manhattantwin** is an R package for generating publication-quality Manhattan plots and inverted Manhattan pair plots for GWAS data. It provides advanced features for SNP clustering, gene labeling, and customizable plot outputs.
 
 ## Features
+
 - Cluster SNPs by genomic distance and p-value
 - Generate single Manhattan plots with gene/group labeling
 - Create inverted Manhattan pair plots for comparative studies
 - Publication-ready PNG and PDF outputs
-
+- **Customizable gene label colors:** Use different colors for each gene threshold, making it easy to visually distinguish significance levels on your plots.
 
 ## Installation
 
@@ -20,7 +21,6 @@ install.packages("devtools")
 # Install manhattantwin from GitHub
 devtools::install_github("AlsammanAlsamman/manhattantwin")
 ```
-
 
 ## Example Usage
 
@@ -41,23 +41,26 @@ gwasdataseta <- manhattantwin::cluster_snps(
   distance_threshold = 250000
 )
 
-# Generate single Manhattan plot
-manhattantwin::plot_single_manhattan(
-  gwasdataseta,
-  plot_title_prefix = "Example Dataset A",
-  p_col = "pvalue",
-  n_cases = 1000,
-  n_controls = 1000,
-  file_name_prefix = "example_a",
-  group_col = "cluster",
-  gene_col = "gene",
-  output_folder = "single_plots"
-)
+ # Generate single Manhattan plot
+ manhattantwin::plot_single_manhattan(
+   gwasdataseta,
+   plot_title_prefix = "Example Dataset A",
+   p_col = "pvalue",
+   n_cases = 1000,
+   n_controls = 1000,
+   file_name_prefix = "example_a",
+   group_col = "cluster",
+   gene_col = "gene",
+   output_folder = "single_plots",
+   # You can customize label colors for different gene thresholds:
+   label_threshold_colors = c("red" = 5e-8, "orange" = 1e-6, "darkblue" = 1e-5)
+ )
 ```
 
 #### Example Output
 
 ![Single Manhattan Plot](single_plots/example_a_pub.png)
+
 
 ---
 
@@ -89,10 +92,15 @@ manhattantwin::manhattan_pair_plot(
   file_name_prefix = "example_a_vs_b",
   group_col = "cluster",
   gene_col = "gene",
-  output_folder = "pair_plots"
+  output_folder = "pair_plots",
+  label_threshold_colors = c("red" = 5e-8, "orange" = 1e-6, "darkblue" = 1e-5)
 )
 ```
+
 ![Inverted Manhattan Plots](Inverted_Manhattan_Plots/example_a_vs_b.png)
+
+*In the plot above, different colors are used for gene labels based on their significance thresholds (e.g., red for p < 5e-8, orange for p < 1e-6, dark blue for p < 1e-5).*
+
 ## Data
 
 The package includes an example GWAS dataset `gwasdataseta` for demonstration purposes.

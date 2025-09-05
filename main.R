@@ -15,7 +15,9 @@ manhattantwin::plot_single_manhattan(
   output_folder="single_plots"
 )
 
-gwasdatasetb <- manhattantwin::cluster_snps(gwasdataseta,chr_col = "chr", pos_col = "pos", pvalue_col = "pvalue", rsid_col = "rsid", pvalue_threshold = 5e-8, distance_threshold = 250000)
+gwasdatasetb <- manhattantwin::cluster_snps(gwasdataseta,chr_col = "chr", pos_col = "pos", pvalue_col = "pvalue", rsid_col = "rsid", pvalue_threshold = 5e-5, distance_threshold = 250000)
+
+
 
 
 manhattantwin::manhattan_pair_plot(
@@ -31,7 +33,8 @@ manhattantwin::manhattan_pair_plot(
   file_name_prefix = "example_a_vs_b",
   group_col = "cluster",
   gene_col = "gene",
-  output_folder="pair_plots"
+  label_threshold_colors = c("red" = 5e-8, "orange" = 1e-6, "darkblue" = 1e-5),
+  output_folder="Inverted_Manhattan_Plots/"
 )
 
 
