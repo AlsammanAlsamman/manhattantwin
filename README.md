@@ -92,7 +92,7 @@ manhattantwin::manhattan_pair_plot(
   output_folder = "pair_plots"
 )
 ```
-
+![Inverted Manhattan Plots](Inverted_Manhattan_Plots/example_a_vs_b.png)
 ## Data
 
 The package includes an example GWAS dataset `gwasdataseta` for demonstration purposes.
