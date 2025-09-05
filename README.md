@@ -4,7 +4,11 @@
 
 ## Features
 
-- Cluster SNPs by genomic distance and p-value
+
+## Features
+
+- **SNP clustering:** Automatically clusters SNPs by genomic distance and p-value, selecting the most significant SNP (lowest p-value) in each cluster and linking it to the associated gene. This helps highlight the best candidate SNP for each locus.
+- **Region expansion for highly significant SNPs:** The package can expand and visually emphasize regions associated with extremely significant SNPs (e.g., those with p-values less than 5e-10), making it easier to interpret and present key findings. This is controlled by the `y_axis_squish_threshold` parameter (e.g., `y_axis_squish_threshold = 10`).
 - Generate single Manhattan plots with gene/group labeling
 - Create inverted Manhattan pair plots for comparative studies
 - Publication-ready PNG and PDF outputs
@@ -53,7 +57,8 @@ gwasdataseta <- manhattantwin::cluster_snps(
    gene_col = "gene",
    output_folder = "single_plots",
    # You can customize label colors for different gene thresholds:
-   label_threshold_colors = c("red" = 5e-8, "orange" = 1e-6, "darkblue" = 1e-5)
+   label_threshold_colors = c("red" = 5e-8, "orange" = 1e-6, "darkblue" = 1e-5),
+   y_axis_squish_threshold = 10 # expandin snps less than 10 -logpvalue
  )
 ```
 
@@ -93,7 +98,8 @@ manhattantwin::manhattan_pair_plot(
   group_col = "cluster",
   gene_col = "gene",
   output_folder = "pair_plots",
-  label_threshold_colors = c("red" = 5e-8, "orange" = 1e-6, "darkblue" = 1e-5)
+  label_threshold_colors = c("red" = 5e-8, "orange" = 1e-6, "darkblue" = 1e-5),
+  y_axis_squish_threshold = 10 # expandin snps less than 10 -logpvalue
 )
 ```
 
