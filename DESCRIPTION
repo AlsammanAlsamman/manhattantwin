@@ -1,0 +1,47 @@
+Package: manhattantwin
+Type: Package
+Title: Inverted Manhattan Plot Pair Generator for Genetic Studies
+Version: 0.1.0
+Authors@R: c(
+    person(
+      "Alsamman M.", "Alsamman", 
+      email = "alsammana@omrf.org", 
+      role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0002-7765-5035")
+    ),
+    person(
+      "Muhammad M.", "Adeel", 
+      email = "adeelm@omrf.org", 
+      role = "aut",
+      comment = c(ORCID = "YOUR-ORCID-ID")
+    )
+  )
+Author: Alsamman M. Alsamman [aut, cre], Muhammad Adeel [aut]
+Maintainer: Alsamman M. Alsamman <alsamman@omrf.org>
+Description: Creates paired Manhattan plots with one inverted for visual comparison of 
+    genome-wide association studies (GWAS) results. The package provides tools for 
+    generating publication-quality visualizations that highlight genetic associations 
+    across two datasets, with customizable labeling, significance thresholds, and 
+    formatting options. Includes functionality for clustering SNPs based on genomic 
+    distance and p-values.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
+Depends: 
+    R (>= 3.5)
+Imports: 
+    data.table,
+    ggplot2,
+    ggrepel,
+    scales,
+    stringr,
+    ragg,
+    ggnewscale,
+    patchwork,
+    extrafont,
+    igraph
+Suggests: 
+    dplyr
+URL: https://github.com/AlsammanAlsamman/manhattantwin
+BugReports: https://github.com/AlsammanAlsamman/manhattantwin/issues
