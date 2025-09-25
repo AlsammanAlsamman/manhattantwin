@@ -26,7 +26,42 @@ install.packages("devtools")
 devtools::install_github("AlsammanAlsamman/manhattantwin")
 ```
 
-## Example Usage
+
+## Example Data
+
+Here is a sample of the example GWAS dataset included in the package:
+
+```r
+gwasdataseta <- manhattantwin::cluster_snps(
+  gwasdataseta,
+  chr_col = "chr",
+  pos_col = "pos",
+  pvalue_col = "pvalue",
+  rsid_col = "rsid",
+  pvalue_threshold = 5e-8,
+  distance_threshold = 250000
+)
+
+gwasdatasetb <- manhattantwin::cluster_snps(
+  gwasdataseta,
+  chr_col = "chr",
+  pos_col = "pos",
+  pvalue_col = "pvalue",
+  rsid_col = "rsid",
+  pvalue_threshold = 5e-5,
+  distance_threshold = 250000
+)
+
+# View the first few rows
+head(gwasdataseta)
+#>   chr      pos   pvalue  gene rsid
+#> 1  20 57179210 4.86e-24 Gene1  rs1
+#> 2  20 57174000 8.17e-24 Gene2  rs2
+#> 3   1 11783430 1.20e-23 Gene3  rs3
+#> 4  20 57184512 1.33e-23 Gene4  rs4
+#> 5   1 11788391 3.03e-23 Gene5  rs5
+#> 6   4 81383747 7.36e-23 Gene6  rs6
+```
 
 ### 1. Single Manhattan Plot
 
