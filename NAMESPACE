@@ -3,6 +3,8 @@
 export(.onLoad)
 export(annotate_gwas_with_loci)
 export(cluster_snps)
+export(cluster_snps_dt)
+export(cluster_snps_fast)
 export(create_mirrored_manhattan_plot)
 export(plot_single_manhattan)
 export(read_genomic_loci)

@@ -91,3 +91,8 @@ create_mirrored_manhattan_plot(
   custom_gene_colors = highlight_genes,label_alpha = 0.7,label_orientation = "vertical",output_width = 15
 )
 
+
+
+#################### Building Vignette ####################
+# All-in-one command (most common workflow)
+devtools::document(); devtools::install(); renv::snapshot()
