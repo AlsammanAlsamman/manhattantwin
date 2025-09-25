@@ -1,6 +1,6 @@
 # manhattantwin
 
-**manhattantwin** is an R package for generating publication-quality Manhattan plots and inverted Manhattan pair plots for GWAS data. It provides advanced features for SNP clustering, gene labeling, and customizable plot outputs.
+**manhattantwin** is an R package for generating publication-quality Manhattan plots (single) and Miami plots (mirrored/inverted Manhattan pair plots) for GWAS data. It provides advanced features for SNP clustering, gene labeling, and customizable plot outputs.
 
 ## Features
 
@@ -63,14 +63,29 @@ head(gwasdataseta)
 #> 6   4 81383747 7.36e-23 Gene6  rs6
 ```
 
+data("gwasdataseta")
+gwasdataseta <- manhattantwin::cluster_snps(
+
 ### 1. Single Manhattan Plot
 
 ```r
 library(manhattantwin)
 data("gwasdataseta")
 
-# Cluster SNPs
-gwasdataseta <- manhattantwin::cluster_snps(
+# Define metadata for two example cohorts
+cohortA <- list(
+  name = "Simulated European Cohort",
+  n_cases = 1200,
+  n_controls = 2300
+)
+cohortB <- list(
+  name = "Simulated Admixed Cohort",
+  n_cases = 900,
+  n_controls = 2100
+)
+
+# Cluster SNPs for each cohort with different p-value thresholds
+gwasA <- manhattantwin::cluster_snps(
   gwasdataseta,
   chr_col = "chr",
   pos_col = "pos",
@@ -79,66 +94,72 @@ gwasdataseta <- manhattantwin::cluster_snps(
   pvalue_threshold = 5e-8,
   distance_threshold = 250000
 )
+gwasB <- manhattantwin::cluster_snps(
+  gwasdataseta,
+  chr_col = "chr",
+  pos_col = "pos",
+  pvalue_col = "pvalue",
+  rsid_col = "rsid",
+  pvalue_threshold = 1e-6,
+  distance_threshold = 250000
+)
 
- # Generate single Manhattan plot
- manhattantwin::plot_single_manhattan(
-   gwasdataseta,
-   plot_title_prefix = "Example Dataset A",
-   p_col = "pvalue",
-   n_cases = 1000,
-   n_controls = 1000,
-   file_name_prefix = "example_a",
-   group_col = "cluster",
-   gene_col = "gene",
-   output_folder = "single_plots",
-   # You can customize label colors for different gene thresholds:
-   label_threshold_colors = c("red" = 5e-8, "orange" = 1e-6, "darkblue" = 1e-5),
-   y_axis_squish_threshold = 10 # expandin snps less than 10 -logpvalue
- )
+# Custom gene highlight colors
+highlight_genes <- c("GENE1" = "red", "GENE2" = "blue")
+
+# Plot single Manhattan for cohort A
+manhattantwin::plot_single_manhattan(
+  gwasA,
+  plot_title_prefix = cohortA$name,
+  p_col = "pvalue",
+  n_cases = cohortA$n_cases,
+  n_controls = cohortA$n_controls,
+  file_name_prefix = "sim_eur",
+  group_col = "cluster",
+  gene_col = "gene",
+  output_folder = "single_plots",
+  y_axis_squish_threshold = 10,
+  label_threshold_colors = c("red" = 5e-8, "orange" = 1e-6, "darkblue" = 1e-5),
+  custom_gene_colors = highlight_genes
+)
 ```
 
 #### Example Output
 
-![Single Manhattan Plot](single_plots/example_a_pub.png)
+![Single Manhattan Plot](single_plots/sim_eur_pub.png)
 
 
 ---
 
-### 2. Inverted Manhattan Pair Plot
+gwasdatasetb <- manhattantwin::cluster_snps(
+
+### 2. Miami Plot (Mirrored Manhattan Pair Plot)
 
 ```r
-# Cluster a second dataset (for demonstration, using the same data)
-gwasdatasetb <- manhattantwin::cluster_snps(
-  gwasdataseta,
-  chr_col = "chr",
-  pos_col = "pos",
-  pvalue_col = "pvalue",
-  rsid_col = "rsid",
-  pvalue_threshold = 5e-8,
-  distance_threshold = 250000
-)
-
-# Generate inverted Manhattan pair plot
-manhattantwin::manhattan_pair_plot(
-  gwasdataseta,
-  gwasdatasetb,
+# Plot mirrored Manhattan for comparison
+create_mirrored_manhattan_plot(
+  gwasA,
+  gwasB,
   chr_col = "chr",
   bp_col = "pos",
   p_col = "pvalue",
-  n_cases1 = 1000,
-  n_controls1 = 1000,
-  n_cases2 = 1000,
-  n_controls2 = 1000,
-  file_name_prefix = "example_a_vs_b",
+  n_cases1 = cohortA$n_cases,
+  n_controls1 = cohortA$n_controls,
+  n_cases2 = cohortB$n_cases,
+  n_controls2 = cohortB$n_controls,
+  file_name_prefix = "sim_eur_vs_admixed",
   group_col = "cluster",
   gene_col = "gene",
-  output_folder = "pair_plots",
   label_threshold_colors = c("red" = 5e-8, "orange" = 1e-6, "darkblue" = 1e-5),
-  y_axis_squish_threshold = 10 # expandin snps less than 10 -logpvalue
+  output_folder = "Inverted_Manhattan_Plots",
+  y_axis_squish_threshold = 10,
+  plot_title1 = cohortA$name,
+  plot_title2 = cohortB$name,
+  custom_gene_colors = highlight_genes
 )
 ```
 
-![Inverted Manhattan Plots](Inverted_Manhattan_Plots/example_a_vs_b.png)
+![Miami Plot](Inverted_Manhattan_Plots/sim_eur_vs_admixed.png)
 
 *In the plot above, different colors are used for gene labels based on their significance thresholds (e.g., red for p < 5e-8, orange for p < 1e-6, dark blue for p < 1e-5).*
 

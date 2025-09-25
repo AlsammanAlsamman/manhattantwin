@@ -25,27 +25,31 @@ plot_single_manhattan(
   label_threshold_colors = c(red = 5e-08, orange = 1e-06, darkblue = 1e-05),
   y_axis_squish_threshold = 30,
   gene_label_size = 3.5,
+  label_orientation = "horizontal",
+  label_alpha = 0.7,
   output_folder = "Single_Manhattan_Plots",
   file_name_prefix,
-  font_family = "Arial Unicode MS"
+  font_family = "Arial Unicode MS",
+  output_width = 18,
+  output_height = 8
 )
 }
 \arguments{
-\item{gwas_data}{A data.frame or data.table containing GWAS summary statistics. Must include columns for chromosome, base pair position, and p-values.}
+\item{gwas_data}{A data.frame or data.table containing GWAS summary statistics.}
 
-\item{chr_col}{The name of the column in gwas_data containing chromosome information. Default is "chr".}
+\item{chr_col}{The name of the column for chromosome information. Default is "chr".}
 
-\item{bp_col}{The name of the column in gwas_data containing base pair position. Default is "pos".}
+\item{bp_col}{The name of the column for base pair position. Default is "pos".}
 
-\item{p_col}{The name of the column in gwas_data containing p-values.}
+\item{p_col}{The name of the column for p-values.}
 
-\item{gene_col}{The name of the column for gene or SNP labels. Set to NULL to disable labeling.}
+\item{gene_col}{The name of the column for gene/SNP labels. Set to NULL to disable labeling.}
 
-\item{group_col}{The name of the column used to group SNPs for labeling. If NULL, defaults to gene_col.}
+\item{group_col}{The column used to group SNPs for labeling. Defaults to gene_col.}
 
-\item{loci_to_label}{Optional vector of locus/group names to label. If NULL, uses genes_to_label or p-value threshold.}
+\item{loci_to_label}{Optional vector of locus/group names to label.}
 
-\item{genes_to_label}{Optional vector of gene names to label. Used if loci_to_label is NULL.}
+\item{genes_to_label}{Optional vector of gene names to label.}
 
 \item{custom_gene_colors}{Optional named vector of custom colors for specific gene labels.}
 
@@ -53,51 +57,41 @@ plot_single_manhattan(
 
 \item{n_controls}{Number of controls in the GWAS.}
 
-\item{plot_title_prefix}{Prefix for the plot title (e.g., phenotype or study name).}
+\item{plot_title_prefix}{Prefix for the plot title.}
 
-\item{lambda}{Optional genomic inflation factor. If NULL, calculated from data.}
+\item{lambda}{Optional genomic inflation factor. If NULL, it is calculated from the full dataset.}
 
-\item{total_snps_in_study}{Optional total number of SNPs in the study (for title display).}
+\item{total_snps_in_study}{Optional total number of SNPs in the study for title display.}
 
 \item{add_date_to_title}{Logical; if TRUE, appends the current date to the plot title.}
 
 \item{plot_pval_threshold}{Maximum p-value to include in the plot (default 1).}
 
-\item{sig_lines}{Named vector of significance lines (e.g., c("red" = 5e-8, "blue" = 1e-5)).}
+\item{sig_lines}{Named vector of significance lines (e.g., c("red" = 5e-8)).}
 
-\item{label_threshold_colors}{Named vector of p-value thresholds for label colors (e.g., c("red" = 5e-8, ...)).}
+\item{label_threshold_colors}{Named vector of p-value thresholds for label colors.}
 
-\item{y_axis_squish_threshold}{Y-axis value above which to compress (squish) the scale.}
+\item{y_axis_squish_threshold}{Y-axis value above which to compress the scale.}
 
-\item{gene_label_size}{Size of gene/SNP label text on the plot.}
+\item{gene_label_size}{Size of gene/SNP label text.}
+
+\item{label_orientation}{The orientation of gene labels. Can be "vertical" or "horizontal" (default).}
+
+\item{label_alpha}{The transparency of the gene label background (0=transparent, 1=opaque). Default is 0.7.}
 
 \item{output_folder}{Folder to save output plots.}
 
 \item{file_name_prefix}{Prefix for output file names (PNG and PDF).}
 
-\item{font_family}{Font family to use for the plot (default: "Arial Unicode MS" which supports lambda symbol).}
+\item{font_family}{Font family to use for the plot.}
+
+\item{output_width}{The width of the saved plot in inches. Default is 18.}
+
+\item{output_height}{The height of the saved plot in inches. Default is 8.}
 }
 \value{
-Invisibly returns NULL. The function saves a PNG and a PDF file of the Manhattan plot and prints a summary message.
+Invisibly returns NULL. Saves a PNG and a PDF file of the plot.
 }
 \description{
-(Version 13: Handles NULL for gene_col to allow plotting without gene labels)
-}
-\examples{
-\dontrun{
-# Example usage
-data(gwas_results)
-plot_manhattan(
-  gwas_data = gwas_results,
-  chr_col = "chr",
-  bp_col = "pos",
-  p_col = "p",
-  gene_col = "gene",
-  n_cases = 10000,
-  n_controls = 10000,
-  plot_title_prefix = "Trait Analysis",
-  file_name_prefix = "trait_manhattan"
-)
-}
-
+(Version 17: Implemented dynamic Y-axis breaks for better visualization)
 }
