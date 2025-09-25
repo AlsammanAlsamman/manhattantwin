@@ -104,8 +104,22 @@ gwasB <- manhattantwin::cluster_snps(
   distance_threshold = 250000
 )
 
-# Custom gene highlight colors
-highlight_genes <- c("GENE1" = "red", "GENE2" = "blue")
+highlight_genes <- c(
+  "Gene1" = "red",
+  "Gene141" = "blue",
+  "Gene393" = "darkgreen",
+  "Gene81" = "purple",
+  "Gene505" = "orange",
+  "Gene56" = "brown",
+  "Gene670" = "cyan",
+  "Gene187" = "magenta",
+  "Gene219" = "gold",
+  "Gene210" = "darkred",
+  "Gene196" = "navy",
+  "Gene344" = "forestgreen",
+  "Gene690" = "darkorange",
+  "Gene26" = "deepskyblue"
+)
 
 # Plot single Manhattan for cohort A
 manhattantwin::plot_single_manhattan(
@@ -118,7 +132,7 @@ manhattantwin::plot_single_manhattan(
   group_col = "cluster",
   gene_col = "gene",
   output_folder = "single_plots",
-  y_axis_squish_threshold = 10,
+  y_axis_squish_threshold = 30,
   label_threshold_colors = c("red" = 5e-8, "orange" = 1e-6, "darkblue" = 1e-5),
   custom_gene_colors = highlight_genes
 )
@@ -152,10 +166,13 @@ create_mirrored_manhattan_plot(
   gene_col = "gene",
   label_threshold_colors = c("red" = 5e-8, "orange" = 1e-6, "darkblue" = 1e-5),
   output_folder = "Inverted_Manhattan_Plots",
-  y_axis_squish_threshold = 10,
+  y_axis_squish_threshold = 30,
   plot_title1 = cohortA$name,
   plot_title2 = cohortB$name,
-  custom_gene_colors = highlight_genes
+  custom_gene_colors = highlight_genes,
+  label_alpha = 0.7,
+  label_orientation = "vertical",
+  output_width = 15
 )
 ```
 
